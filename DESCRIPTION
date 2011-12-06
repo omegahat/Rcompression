@@ -1,0 +1,19 @@
+Package: Rcompression
+Version: 0.93-2
+Title: In-memory decompression for GNU zip and bzip2 formats.
+Author: Duncan Temple Lang
+Depends: methods, R (>= 1.0.0)
+Maintainer: Duncan Temple Lang <duncan@wald.ucdavis.edu>
+Description: The package is a basic interface to some of the compression 
+   facilities in the zlib and bzip2 libraries for uncompressing (and compressing)
+   data in memory that is not in a file. It handles bz2, gzip and regular compress (.Z)
+   content.  It can work on files or with data in memory, e.g. downloaded directly into memory
+   via an HTTP request.  It is used when we don't want to write 
+   data to a file and then read it back into R. This is common when performing
+   HTTP requests via the RCurl package and dependent packages such as SSOAP.
+License: zlib. See LICENSE. 
+LazyLoad: yes
+URL: http://www.omegahat.org/Rcompression
+Collate: runTime.R Runzip.R unzip.R zave.R zip.R zipComment.R removeZipEntry.R 
+         archive.R Rtar.R bunzip2.R compress.R 
+         

@@ -1,0 +1,17 @@
+Get zlib123.zip from www.zlib.net (near the bottom of the page
+under zlib compiled DLL). Unzip this into a directory, say,
+C:/zlib.  Then set the environment variable LIB_ZLIB to that
+directory.
+
+Get bzip2 from
+  http://gnuwin32.sourceforge.net/packages/bzip2.htm
+under the Binary link. This includes the files needed
+to link and run/load, i.e. the .ht files, the .dll.a
+file and the bzip2.dll for run-time.
+
+This package now expects the bzip2 files to be in
+include/, lib/ and bin/ directories. So set LIB_BZIP2 to the 
+parent directory that contains include/bzip2.h and bin/bzip2.dll.
+
+
+

@@ -1,0 +1,174 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html> <head>
+<title>R compression To Do list</title>
+</head>
+
+<body>
+<h1>Rcompression To Do list</h1>
+
+<dl>
+
+  <dt>
+  <li>[Done] names on the zip archive (@elements) becoming numbers when
+  duplicates.
+      Are we taking the rownames when we have the actual names!
+  <dd>
+<pre>
+  content = I(c(myFile = "This is raw text",
+                  otherFile = paste(letters, collapse = "\n"),
+                  x = "a", x = "b", x = "c"))
+
+  zip("asis.zip", content, append = FALSE)
+  z = zipArchive("asis.zip")      
+</pre>      
+  
+  <dt>
+  <li> When rewriting a zip file, want to preserve times. So need to
+  be able to specify these as a vector to zip().
+  <dd> 
+  
+  <dt>
+  <li> For RdzArchive files, should .toc not count when indexing by integer.
+  <dd> i.e. x[[1]] gives the second element since .toc is first.
+
+  <dt>
+  <li>  [Done] Get the last element named 'whatever'. Do this for [[ and $
+        operators on ZipArchive.
+  <dd>  Done for [[ in RdzArchive.
+      <br/>
+       [Done] Move to ZipArchive.
+
+  <dt>
+  <li> Add ability to remove an entry.
+  <dd> Load them all up, remove one or more, then zip them back.
+      For Rdz files need to avoid deserializing first.
+  <dt>
+  <li> Getting problems about NULL value passed to R_getNativeReference.
+  <dd> Is this just with remove entries -  zipRemoveEntries?
+
+  <dt>
+  <li> When update a RdzArchive, the .toc is out of date in the file.
+  <dd> Not much we can do about this unless we add a new one.
+      <br/>
+         When create the object in zipArchive()
+      we can cache the Sys.time() and compare that to the
+       file.info()[1, "mtime"] to see if the file has been modified
+       since the elements were cached.
+  <dt>
+  <li> [Done] When we have several elements with the same name in an archive,
+       allow accessing the last one?
+  <dd>  ar[["x", last = TRUE]]  # default
+        ar[["x", last = FALSE]]
+ 
+  <dt>
+  <li> Global comment.
+  <dd> Use zipOpen2 in minizip rather than zipOpen().
+
+  <dt>
+  <li> [Done] When we update a ZipArchive, the info slot is out of date
+  <dd> We can add a row to the date frame when we append.
+       <br/>
+      [Done] Updated now, but fix the row names (now .toc, .toc1, .toc2) 
+
+      
+  <dt>
+  <li> [Done] getZipInfo( comment = TRUE) causing problems
+  <dd> Returning garbage. Initialization problem in C.
+  
+  <dt>
+  <li> [Done] setting rownames on the getZipInfo()  can cause problems
+  because of duplicate names.
+  <dd>
+<pre>
+library(Rcompression)
+x = I(c(a = "ABC", b = "DEF", c = "GHIJKLML"))
+zip("foo.zip", x, append = FALSE)
+zip("foo.zip", x)
+z = zipArchive("foo.zip")
+getZipInfo(z)      
+</pre>      
+  
+  <dt>
+  <li> [Done] Allow comments on the zip elements.
+        And also for the entire zip file, i.e. a global comment.
+  <dd> Done for the elements, but how do we see them?
+      getZipInfo() now optionally returns them.
+      <br/>
+      But they are truncated.
+  <br/>
+      Seems okay now. See tests/comments.R
+      
+  <dt>
+  <li> Reading a file from a zip file seems to take a long time. Are
+       we reading the whole file each time?
+  <dd>
+
+  <dt>
+  <li> [Done] Encoding issues in tests/zip.R
+  <dd> Don't think so. Just have to supply the password. (Was that the
+  problem?)
+  
+  <dt>
+  <li>  Add the deflate functions for gzip and bzip2.
+  <dd> gzip done. But we cannot gunzip() the result.
+      <br/> Still true?
+<pre>
+gunzip(gzip("This is a string"))      
+</pre>
+No bzip2 facilities.      
+  <dt>
+  <li> Allow the user to provide a connection on which to provide the
+      compressed input so that the routines pull the data from that
+      rather than having it in a buffer ahead of time.
+  <dd>
+
+  <dt> Hookup to the RCurl write_binary_data routine to have inflation
+      be done on the fly.
+  <dd>      
+
+      
+  <dt>
+  <li>[Done] If given I(c("A", "B")), preserve the I across the elements
+       when making a list.
+  <dd> In the tests now.
+
+  <dt>
+  <li> [Done] On Windows, can we have, e.g., c:/ in the name of a directory. What
+  about \
+  <dd> Yes, but the regular unzip replaces c:/ with c_/, i.e. we get a
+  top-level directory named c_
+      
+  <dt>
+  <li> [Done] Check directories on Windows
+  <dd>
+<pre>
+content = list( "A/myFile" = I("This is raw text"), "B/otherFile" = I(paste(letters, collapse = "\n")), top = I("A string"))
+zip("/tmp/dir.zip", content)      
+</pre>
+      Then unzip externally to see if the zip facilities do the right thing.
+      
+  <dt>
+  <li> [Done] Check directories for zip, i.e. when we use hierarchical names
+  <dd> 
+  
+  <dt>
+  <li> [Done] Put the current date for in-memory elements  in call to zip().
+  <dd>
+  
+  <dt>
+  <li> [Done for []. ]Make the x[] and x[c(a, b, c)] read sequentially rather than
+        starting over each time.
+  <dd> Could find a, b, c and figure out the order.
+  
+
+</dl>
+
+
+
+<hr>
+<address><a href="http://www.stat.ucdavis.edu/~duncan">Duncan Temple Lang</a>
+<a href=mailto:duncan@wald.ucdavis.edu>&lt;duncan@wald.ucdavis.edu&gt;</a></address>
+<!-- hhmts start -->
+Last modified: Fri Feb 12 07:14:35 PST 2010
+<!-- hhmts end -->
+</body> </html>

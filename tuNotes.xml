@@ -1,0 +1,203 @@
+<?xml version="1.0"?>
+<article xmlns:r="http://www.r-project.org">
+
+<section>
+<title>Introduction</title>
+<para>
+In this article, we show how we can create the 
+code for the R interface to some of the routines and data structures
+in the unzip.c file (and associated header file).
+ 
+</para>
+
+<ignore>						       <!--XXX -->
+We want to do something like do_list but we want the results in R.
+
+<r:code>
+unz = unzOpen(filename)
+gi = unzGetGlobalInfo(unz)
+for(i in 1:gi$number_entry) {
+  info = unzGetCurrentFileInfo(unz)
+  # info should return a (reference to or copy of) the unz_file_info object
+  # and the name of the file. These are both output arguments.
+}
+</r:code>
+
+We need to tell the code generation mechanism that 
+
+unz_file_info
+unzFile
+</ignore>
+
+</section>
+
+<section>
+<title>Creating the R interface from the TU file</title>
+
+<para>
+We start by parsing the tu file
+
+<ignore>
+We note that we are only generating the bindings for a particular collection
+of data structures and routines in the <file>unzip.c</file> file.
+</ignore>
+
+<r:code>
+library(RGCCTranslationUnit)
+p = parseTU.Perl("unzip.c.tu", "C")
+</r:code>
+<ignore>
+  Don't need to do this. 
+<r:code>
+defs = getDataStructures(p, c("miniunz", "miniunzip", "unzip"))
+</r:code>
+</ignore>
+
+<ignore>
+<r:code>
+routineNames = c("unzOpen", "unzClose", "unzGoToFirstFile", "unzGoToNextFile", 
+                 "unzGetGlobalInfo", "unzGetCurrentFileInfo")
+</r:code>
+</ignore>
+<r:code>
+
+We find all the routines in the files name miniunz, miniunzip and
+unzip.  Then we resolve these routines into their complete
+definitions, i.e. with all the type information collected into
+self-describing R objects. All the type information is now centralized
+in the <r:var>types</r:var> variable (which is an environment used for
+holding this information as it is gathered).
+<r:code>
+routines = getRoutines(p, c("miniunz", "miniunzip", "unzip"))
+
+types = DefinitionContainer()
+rdefs = lapply(routines, resolveType, p, types)
+</r:code>
+
+Now we have the information about the routines, we can 
+generate the code to interface from R to these routines.
+<r:code>
+bindings = lapply(rdefs, createMethodBinding)
+</r:code>
+
+In the case of <c:routine>unzGetGlobalInfo</c:routine>,
+we want to tell the code generation mechanism 
+that the second parameter is in fact a pure out argument.
+It is used merely to convey the result back to the caller
+and so, in the R interface function, we don't want the user to see it.
+<r:code>
+cat(createMethodBinding(rdefs$unzGetGlobalInfo, paramStyle = c("", "out"))$native)
+</r:code>
+
+Similarly, the routine <c:routine>unzGetCurrentFileInfo</c:routine>
+has only one pure in parameter (the first), one pure out parameter
+(the second) and the remaining 3 are in/out parameters. So we want the
+R user to be able to specify all but the out parameter.
+<r:code>
+cat(createMethodBinding(rdefs$unzGetCurrentFileInfo, 
+                        paramStyle = c("", "out", rep(c("inout", ""), 3)), 
+                        defaultRValues = c("szFileName" = 'paste(rep(".",  256), sep = "")', 
+                                          fileNameBufferSize = "nchar(szFileName)", 
+                                          extraField = "raw(0)", 
+                                          extraFieldBufferSize = "length(extraField)", 
+                                          szComment = "''", 
+                                          commentBufferSize = "nchar(szComment)"))$r)
+</r:code>
+
+
+Now we want to turn our attention to the code that is needed to
+support these interface routines and R functions.  Specifically, we
+need the code to marshall the C data structures to and from R and
+similarly, we need R classes to represent these structures in R.
+We start with the C code.
+<r:code>
+cat(createCopyStruct(types$unz_file_info))
+cat(createCopyStruct(types$tm_unz))  # tm_unz or unz_tm?
+</r:code>
+
+And now the R classes.
+<r:code>
+#defineStructClass(types$unz_file_info)
+# order is important.
+invisible(sapply(defineStructClass(types$unz_file_info, types), function(x) cat(x, "\n")))
+invisible(sapply(defineStructClass(types$tm_unz, types), function(x) cat(x, "\n")))
+
+# Currently doing this by hand.
+setClass("unzFile", contains = "RC++Reference",
+          prototype = list(classes = "unzFile"))
+
+</r:code>
+
+<r:code>
+cat(bindings$unzOpen$native)
+cat(bindings$unzClose$native)
+cat(bindings$unzGoToFirstFile$native)
+
+# Skip the 2 with the out arguments for the moment.
+invisible(sapply(bindings[1:4], function(x) cat(x$r, "\n\n\n")))
+</r:code>
+
+</section>
+
+<section>
+<title>Usage Examples</title>
+
+<r:example>
+The higher-level function is getZipInfo
+<r:code>
+source("unzip.R")
+
+h = unzOpen("MyZip.zip")
+info = unzGetGlobalInfo(h)
+
+ff = paste(rep(".", 256), collapse = "")
+unzGetCurrentFileInfo(h, ff, nchar(ff), raw(0), 0, character(), 0)
+
+unzGoToFirstFile(h)
+els = lapply(seq(length = info[[2]]@number_entry), 
+             function(i) {
+               ans = unzGetCurrentFileInfo(h, ff, nchar(ff), raw(0), 0, character(), 0)
+               unzGoToNextFile(h)
+               ans
+             })
+
+# Get the file names
+names(els) = sapply(els, function(x) x$szFileName)
+
+# compression ratio
+sapply(els, function(x) x[[2]]@compressed_size)/sapply(els, function(x) x[[2]]@uncompressed_size)
+
+# Note that the month is 0-based!
+els$DESCRIPTION[[2]]@tmu_date
+
+unzClose(h)
+</r:code>
+</r:example>
+</section>
+
+<r:example>
+
+Same sort of deal for untgz.  We look at main and find the routines
+that are in referenced in it.  We can use callGraph to do this
+or just examine the code itself.
+For listing (or extracting) files, we see that only 
+gzopen and tar are used.
+We will need to open the file ourselves.
+And we don't want to call tar as that performs the
+actions. Rather we want to see how tar access the
+elements in the archive.
+
+
+<r:code>
+library(RGCCTranslationUnit)
+p = parseTU("untgz.c.tu")
+p = setLanguage(p, "C")
+routines = getRoutines(p, "untgz")
+
+types = DefinitionContainer()
+rdefs = lapply(routines, resolveType, p, types)
+
+bindings = lapply(rdefs, createMethodBinding)
+</r:code>
+</r:example>
+</article>

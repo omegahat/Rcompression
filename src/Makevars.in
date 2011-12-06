@@ -1,0 +1,11 @@
+# Have to use the version I have in my home directory.
+# otherwise get Z_STREAM_ERROR (-2) when calling deflateInit2().
+
+PKG_CPPFLAGS= -I${HOME}/zlib-1.2.3 -I${HOME}/bzip2-1.0.3 -Dunix
+PKG_LIBS=-L${HOME}/zlib-1.2.3  -lz -L${HOME}/bzip2-1.0.3 -lbz2 
+
+#PKG_LIBS=${HOME}/zlib-1.2.3/libz.a -L${HOME}/bzip2-1.0.3 -lbz2
+
+# -I/usr/local/include
+#-L/usr/local/lib -lz
+

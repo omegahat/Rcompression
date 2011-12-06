@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html> <head>
+<link rel="stylesheet" href="http://www.omegahat.org/OmegaTech.css">
+<title>Rcompression: In-memory compression package for R</title>
+</head>
+
+<body>
+<h1>Rcompression package for in-memory compression</h1>
+<p align=right>Last Release:
+ <a href="@TAR_FILE@"> @VERSION@</a> (<font color="red">@DATE@</font>)
+
+
+<p>
+
+This package is a basic interface to the zlib and bzip2 facilities
+for compressing and uncompressing data that are in memory rather
+than in files. This is useful when the data we have to work with
+is never in a file on our local file system but rather
+given to us as part of a transaction with a remote server.
+For example, we might receive a gzipped-text file from
+retrieving a URI via the <a
+href="http://www.omegahat.org/RCurl/">RCurl</a>
+package.  Or we might receive a compressed micro-array file from a Web
+service
+via the <a href="http://www.omegahat.org/SSOAP/">SSOAP</a> package.
+Rather than having to collect that data, then write it to disk
+and then read it back into R, we can uncompress it directly
+in memory.  This avoids unecessary I/O and also improves
+"security" as our scripts do not need to access the file system.
+(This is currently not that important as R is not secure in any way,
+but as we use R more extensively in embedded situations,
+e.g. in databases, Web servers, spreadsheets, other languages like
+Perl &amp; Python, etc., this does become an issue).
+
+<p>
+The current interface is more complete than earlier versions. It provides access to
+<ul>
+  <li> standard Adler compress/decompress from zlib
+  <li> gunzip for uncompressing a GNU zip'ped data vector
+  <li> bunzip2 for inflating a bzip2'ed data vector.
+  <li> tar archives (compressed using GZ or regular if read into R
+        ahead of time)
+  <li> read, writing and updating zip archives in memory and on disk
+        which is useful for processing and creating
+        regular zip, KMZ, jar, docx, xlsx, pptx, key, ... files
+  <li> using zip archives for serializing R objects and providing
+       access to individual elements rather than having to load
+       the entire collection of objects in a regular Rda file.
+</ul>
+
+Recent versions (0.91) onwards are able to deal with updating zip
+files directly in memory rather than using external executables and
+temporary files.  There are also many high-level
+facilities/syntactic-conveniences for updating and appending to a zip
+archive.
+
+<p>
+
+
+At present, one must have the entire data vector in memory before the
+call and the tools operate on it directly.  It is entirely feasible to
+allow us to generalize this and have the tools ask for more data as it
+is needed by the decompression libraries.  And we can do the same
+thing with the output.  In this way, it could work with the existing
+connections mechanism in R at the R level.  Unfortunately, the
+connections API at the C-level is not public and it is not amenable to
+extensions implemented in R packages, i.e. externally from the R
+source code.
+
+<p>
+
+
+
+
+<h2>Installation</h2>
+You will need to have libz (a.ka. zlib) and libbz2
+(a.k.a bzip2) installed.
+The configuration script attempts to find these but is currently
+not very flexible or aggressive about finding them.
+I will add more facilities as people start to use this.
+So please send me mail rather than just hacking the code yourself.
+(Although sending your changes is even better!)
+
+You can find the libraries at
+<ul>
+  <li>
+     <a href="http://www.gzip.org/zlib/">zlib</a>
+  <li>
+
+      <a href="http://www.bzip.org/">bzip2</a>
+</ul>
+Both are trivial to install on almost all machines.
+
+
+<h2>Documentation</h2>
+<dl>
+  <dt>
+  <li> <a href="Changes.html">Changes</a> across releases
+  <dd>
+</dl>
+
+
+
+<hr>
+<address><a href="http://www.stat.ucdavis.edu/~duncan/">Duncan Temple Lang</a>
+<a href=mailto:duncan@wald.ucdavis.edu>&lt;duncan@wald.ucdavis.edu&gt;</a></address>
+<!-- hhmts start -->
+Last modified: Sat Feb 13 15:25:41 PST 2010
+<!-- hhmts end -->
+</body> </html>

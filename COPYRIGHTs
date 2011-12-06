@@ -1,0 +1,43 @@
+This package was developed by Duncan Temple Lang (duncan@r-project.org)
+but includes adapted code from several different distributions
+by numerous authors.
+
+
+crypt.h 
+ioapi.c 
+ioapi.h 
+miniunz.c
+miniunzip.h (renamed unzip.h)
+minizip.h   (renamed zip.h)
+unzip.c     (with modifications by DTL to change the parameter
+             declarations to ANSI C from K&R style and some braces
+             around if() bodies.)
+
+are all from the contrib/minzip/ directory
+of zlib-1.2.3 and  Copyright (C) 1998-2005 Gilles Vollant
+
+
+untgz.c
+untgz.h
+
+ are derived from untgz.c from the contrib/untgz directory of 
+ zlib-1.2.3.  I have create the .h file from the original untgz.c
+ and then modified the code in untgz.c from the original so that
+ we can use a subset of the routines and and have callbacks
+ for "entry events".
+
+ The original code has:
+   written by Pedro A. Aranda Gutierrez <paag@tid.es>
+   adaptation to Unix by Jean-loup Gailly <jloup@gzip.org>
+   various fixes by Cosmin Truta <cosmint@cs.ubbcluj.ro>
+
+
+
+bzip2.c
+zlib.c
+RConverters.c
+RConverters.h
+Runtgz.c
+Runzip.c
+
+  were created by DTL.

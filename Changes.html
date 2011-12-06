@@ -1,0 +1,220 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html> <head>
+<title></title>
+</head>
+
+<body>
+<h1></h1>
+
+<h2>Version 0.93-2</h2>
+<dl>
+  <dt> Added unistd.h as an include in untgz.h for the Mac as it was
+      needed on some/at least one OS X configurations. Thanks to
+      Stephen Eglen.
+       
+  <dd>
+</dl>
+
+<h2>Version 0.93-1</h2>
+<dl>
+  <dt> configure script was not built. 
+  <dd>
+</dl>
+
+<h2>Version 0.93-0</h2>
+
+<dl>
+  <dt>
+  <li> Changed the license to zlib as some of the code was under that license.
+  <dd> Thanks to Pierre-Yves Chibon for bringing this to my attention
+  as he made this R package it into a package for Fedora.
+      
+</dl>
+
+<h2>Version 0.92-0</h2>
+
+<dl>
+
+  <dt>
+  <li> Replacing elements in an RdzArchive file updates the .toc. 
+  <dd>
+  
+  <dt>
+  <li> Replacing elements in an archive now feasible.
+  <dd>
+  
+  <dt>
+  <li> Support for comments on entries in a zip file, both reading
+       them and writing them during the call to zip(). Including a
+       global comment on the file.  (getZipComment() for the global
+       comment and getZipInfo().)
+  <dd>
+
+  <dt>
+  <li>  zipArchive("name")[ ]  returns a list of giving the contents
+        of all the elements of the archive and works faster by
+        reading the sequentially and continuing from the last point
+        read (as opposed to read each one separately and having to traverse
+         the archive each time).
+  <dd>
+
+  <dt>
+  <li>  RdzArchive$name = value appends value to the RdzArchive.
+  <dd>
+
+  <dt>
+  <li> Appending to an archive done via in-memory operations rather
+       than call to external zip executable and unzipping and copying files
+       to temporary directory.
+  <dd>
+      
+  <dt>
+  <li>  Time stamp in zip files created in R with in-memory objects
+        as entries use the current time - Sys.time().
+  <dd>
+      
+</dl>
+
+<h2>Version 0.91-0</h2>
+<dl>
+  
+  <dt>
+  <li> Added a zave() function (concatenation of zip and save) to serialize a collection of R objects to 
+      a zip archive. These are the accessible individually, rather than having to restore
+      all the variables in the archive. Also, one can inquire about the variables in the
+      file using <code>names(rdz)</code> and even determine the class of the objects via a
+      table of contents.
+  <dd>
+
+  <dt>
+  <li> Added RdzArchive class to represent an R object serialized  object.
+      This provides methods for un/de-serializing objects in the archive.
+  <dd>
+
+  <dt>
+  <li> zip() can handle in-memory content, i.e. raw and AsIs character vectors,
+       along with file names (all in the same call). 
+  <dd>
+ 
+  <dt>
+  <li> Fixed getZipFileEntry to handle mode = "raw" or mode = "binary".
+  <dd> 
+
+  <dt>
+  <li> Fixed the [[ method for ZipArchive to return raw vectors correctly
+  <dd>
+</dl>
+
+<h2>Version 0.9-0</h2>
+<dl>
+ <dt>
+ <li> Added a zip() function to create a zip() file in memory.
+ <dd> It handles appending files, but one can end up with duplicates
+      and we cannot remove or replace files in the current implementation.
+</dl>
+
+
+
+<h2>Version 0.7-0</h2>
+
+<dl>
+<dt>
+<li> Added resizeBy parameter to uncompress() which controls
+     how the buffer size is enlarged when more memory is needed
+     for the uncompressed data.
+<dd>
+
+<dt>
+<li> Check for user interrupts and events in uncompress().
+<dd>
+    
+</dl>    
+
+<h2>Version 0.6-0</h2>
+
+<dl>
+<dt>
+<li> Added ability to work with Zip archives directly in memory.
+<dd> This allows one to  download a Zip file via getURLContent() in
+  the RCurl package and then work with that without writing the 
+  contents to disk. It also allows one to take a snapshot of the contents of a Zip file
+   and work with that without fear of it being modified by other 
+   applications, etc.  
+</dl>
+
+
+
+<h2>Version 0.5-0</h2>
+<dl>
+  <dt>
+  <li> Facilities for extracting elements of a ZIP archive, even with
+       a password. zipArchive() and methods for accessing elements of
+       a ZIP archive as if it were a list.
+  <dd>
+  
+  <dt>
+  <li> Truncated file names in getZipInfo() now
+       corrected. filename.size parameter added.
+  <dd>
+</dl>
+
+<h2>Version 0.4-0</h2>
+<dl>
+
+  <dt>
+  <li> Support for reading from a RAW vector rather than a file in
+       tarInfo() and tarExtract().
+  <dd>
+  <dt>
+  <li> Documentation for and minor changes to collectContents().
+  <dd>
+
+  <dt>
+  <li> Handle includes on the Mac where direct.h and io.h are not
+         available or needed.
+  <dd>
+</dl>
+
+
+<h2>Version 0.3-1</h2>
+
+<dl>
+  <dt> compress() now sets the length of the resulting vector
+       correctly, rather than leaves the trailing elements of the
+       working vector as '0'.  So the length of the result
+       is the number of bytes of the compressed data.
+       This can be used to measure the compression ratio,
+        e.g. <code>length(compress(txt))/nchar(txt)</code>.
+  <dd>
+</dl>
+
+<h2>Version 0.3-0</h2>
+<dl>
+  <dt>
+  <li> Connected the code for dealing with gzipped tar files
+      (.tar.gz/.tgz). The functions to use are tarInfo() and tarExtract(). 
+  <dd>
+</dl>
+
+<h2>Version 0.2-1</h2>
+<dl>
+  <dt>
+  <li> Removed dependency on RGCCTranslationUnit package. We include
+       the relevant code in this package.
+  <dd>
+</dl>
+
+<h2>Version 0.2-0</h2>
+<dl>
+  <dt>
+  <li> Support for getting "table of contents" information from a zip file.
+  <dd>
+</dl>
+
+<hr>
+<address><a href="http://www.stat.ucdavis.edu/~duncan">Duncan Temple Lang</a>
+<a href=mailto:duncan@wald.ucdavis.edu>&lt;duncan@wald.ucdavis.edu&gt;</a></address>
+<!-- hhmts start -->
+Last modified: Wed Apr  6 14:51:17 PDT 2011
+<!-- hhmts end -->
+</body> </html>

@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="../../../../../Classes/StatComputing/XDynDocs/inst/XSL/OmegahatXSL/Todo.xsl" ?>
+<topics xmlns:r="http://www.r-project.org" xmlns:c="http://www.C.org">
+  <topic>
+    <items>
+     <item status="check">
+Add a replace argument for [[&lt;- and $&lt;-  so that if an object of that name already exists
+ we rewrite the zip file with the new value replacing the old one.
+   <br/>
+  Simple to implement, just have to such them all in as raw and add this one to the list
+  and zip again.
+   <br/>
+  Need to update info. And implement for RdzArchive.
+     </item>
+
+      <item status="done"> When rewriting a zip file, want to preserve times. 
+           So need to   be able to specify these as a vector to zip().   
+<br/>
+    the time parameter expects a POSIXct vector.
+    The C code in minizp.c expects an POSIXlt.
+      </item>
+
+      <item status="low"> For RdzArchive files, should .toc not count when indexing by integer.  
+       <p> i.e. x[[1]] gives the second element since .toc is first.    </p>
+      </item>
+
+      <item status="done">  [Done] Get the last element named 'whatever'. Do this for [[ and $         operators on ZipArchive.   
+       <p>  Done for [[ in RdzArchive.       <br/>       
+            [Done] Move to ZipArchive.    
+       </p></item>
+
+     <item status="check">
+When removing elements and re-zipping, allow this to be done via a method
+so, e.g. RdzArchive's can be zipped with a new table of contents, etc.
+     </item>
+
+      <item status="done"> Add ability to remove an entry.   
+         <p> Load them all up, remove one or more, then zip them back.       For Rdz files need to avoid deserializing first.   
+        </p></item>
+
+      <item status="check"> Getting problems about NULL value passed to R_getNativeReference.   
+        <p> Is this just with remove entries -  zipRemoveEntries?   Is this just for Rdz files (i.e. created with zave())
+        </p>
+  <p>I think this was because zip() was being passed an R object that wasn't one of the content
+types and we were passing down an NA for the type and bad things were happening.
+Fixed now.</p>
+      </item>
+
+
+      <item status="check"> When update a RdzArchive, the .toc is out of date in the file.   
+          <p> Not much we can do about this unless we add a new one.    
+  If we are replacing an entry we update the .toc. If not, we don't and we have an inconsistency
+  but save processing the entire file.
+	  </p>
+            </item>
+      <item>
+          [Done]  When create the object in zipArchive()  we can cache the Sys.time() and compare that to the 
+            file.info()[1, "mtime"] to see if the file has been modified  since the elements were cached.   
+    </item>
+
+
+      <item status="done"> [Done] When we have several elements with the same name in an archive,        allow accessing the last one?   <p>  ar[["x", last = TRUE]]  # default         ar[["x", last = FALSE]]     </p></item>
+      <item status="done"> Global comment.   <p> Add it in zipClose().    </p></item>
+      <item status="done"> [Done] When we update a ZipArchive, the info slot is out of date   <p> We can add a row to the date frame when we append.        <br/>       [Done] Updated now, but fix the row names (now .toc, .toc1, .toc2)            </p></item>
+      <item status="done"> [Done] getZipInfo( comment = TRUE) causing problems   <p> Returning garbage. Initialization problem in C.      </p></item>
+      <item status="done"> [Done] setting rownames on the getZipInfo()  can cause problems   because of duplicate names.   <p><pre> library(Rcompression) x = I(c(a = "ABC", b = "DEF", c = "GHIJKLML")) zip("foo.zip", x, append = FALSE) zip("foo.zip", x) z = zipArchive("foo.zip") getZipInfo(z)       </pre></p></item>
+      <item status="done"> [Done] Allow comments on the zip elements.         And also for the entire zip file, i.e. a global comment.   <p> Done for the elements, but how do we see them?       getZipInfo() now optionally returns them.       <br/>       But they are truncated.   <br/>       Seems okay now. See tests/comments.R          </p></item>
+      <item> Reading a file from a zip file seems to take a long time. Are        we reading the whole file each time?   <p>    </p></item>
+      <item status="done"> [Done] Encoding issues in tests/zip.R   <p> Don't think so. Just have to supply the password. (Was that the   problem?)      </p></item>
+      <item>  Add the deflate functions for gzip and bzip2.   <p> gzip done. But we cannot gunzip() the result.       <br/> Still true? <pre> gunzip(gzip("This is a string"))       </pre> No bzip2 facilities.         </p></item>
+      <item> Allow the user to provide a connection on which to provide the       compressed input so that the routines pull the data from that       rather than having it in a buffer ahead of time.   <p>    </p></item>
+      <item status="done">[Done] If given I(c("A", "B")), preserve the I across the elements        when making a list.   <p> In the tests now.    </p></item>
+      <item status="done"> [Done] On Windows, can we have, e.g., c:/ in the name of a directory. What   about \   <p> Yes, but the regular unzip replaces c:/ with c_/, i.e. we get a   top-level directory named c_          </p></item>
+      <item status="done"> [Done] Check directories on Windows   <p><pre> content = list( "A/myFile" = I("This is raw text"), "B/otherFile" = I(paste(letters, collapse = "\n")), top = I("A string")) zip("/tmp/dir.zip", content)       </pre>       Then unzip externally to see if the zip facilities do the right thing.          </p></item>
+      <item status="done"> [Done] Check directories for zip, i.e. when we use hierarchical names   <p>       </p></item>
+      <item status="done"> [Done] Put the current date for in-memory elements  in call to zip().   <p>      </p></item>
+      <item status="done"> [Done for []. ]Make the x[] and x[c(a, b, c)] read sequentially rather than         starting over each time.   <p> Could find a, b, c and figure out the order.     </p></item>
+
+      <item status="done">[Done] names on the zip archive (@elements) becoming numbers when   duplicates.       Are we taking the rownames when we have the actual names!   <p>
+<pre>   content = I(c(myFile = "This is raw text",                   otherFile = paste(letters, collapse = "\n"),                   x = "a", x = "b", x = "c"))    zip("asis.zip", content, append = FALSE)   z = zipArchive("asis.zip")       
+</pre>
+</p>
+</item>
+    </items>
+  </topic>
+</topics>
+ 
+

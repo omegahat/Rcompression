@@ -1,0 +1,39 @@
+<article>
+
+<para>
+Now we want to be able to extract files from ZIP archives.  For
+example, we would like to be able to read Office 2008 documents which
+are ZIP archives, i.e. .docx files.  Given a file name, we want to use
+unzOpen() and then move to the relevant file via unzGoToNextFile().
+We can determine how many times to call this by looking in the global
+info table.  We call unzGoToFirstFile() and then unzGoToNextFile().
+From the info table, we know how many bytes the content of the file
+occupies.  We can get these as raw bytes.  How do we then uncompress
+the actual content?
+</para>
+<para>
+We use the primitives in the approach above in the implementation of
+getZipInfo. So looks like we are good to go.
+</para>
+<para>
+See  do_extract_currentfile in miniunz.c.
+unzOpenCurrentFilePassword
+unzReadCurrentFile
+Basically, repeated calls to 
+unzReadCurrentFile where the return value is greater than 0
+we can fill up the buffer.
+The buffer
+</para>
+<para>
+
+</para>
+<para>
+We can call unzLocateFile for a given filename within the archive.
+We can also do this in R from the info.
+</para>
+<para>
+We would also like to be able supply the password for a 
+password-protected ZIP file.
+</para>
+
+</article>

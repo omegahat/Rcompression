@@ -1,0 +1,65 @@
+useDynLib(Rcompression,
+          R_uncompress, R_gzuncompress, R_compress, R_bz2uncompress,
+          R_zlibVersion,
+          R_tarInfo, R_getTarTypeNames, R_tarExtract, 
+          R_gzip
+         )
+
+export(compress, uncompress, gunzip, bunzip2, gzip)
+export(getZipInfo)
+export(tarInfo, tarListCallback, tarExtract, collectContents)
+
+exportClasses(
+              tm_unz, tm_unzRef,
+              unz_file_info, unz_file_infoRef,
+              unzFileRef, 
+              unz_global_info, unz_global_infoRef
+             , voidRef
+             )
+# unzContentRef, unzMemoryRef,
+
+
+S3method("as.data.frame", "ZipArchiveDescription")
+S3method("as.POSIXlt", "tm_unz")
+
+export(getZipFileEntry)
+
+#exportMethods(coerce)
+
+# export(unzRef)
+export(loadZip, readBinaryFile)
+
+#S3method("$", "ZipArchiveDataFrame")
+#S3method("[[", "ZipArchiveDataFrame")
+# S3method("[", "ZipArchiveDataFrame")
+
+
+exportClasses("ZipArchive", ZipFileArchive, ZipMemoryArchive, ZipArchiveEntry)
+
+export(zipArchive)
+if(FALSE) {
+ S3method("$", "ZipArchive")
+ S3method("[[", "ZipArchive")
+ S3method("[", "ZipArchive")
+ S3method("[[<-", "ZipArchive")
+ S3method("[<-", "ZipArchive")
+ S3method("names", "ZipArchive")
+ S3method("length", "ZipArchive")
+ S3method("print", "ZipArchive")
+}
+
+exportMethods("$", "[[", "[", "names", "length")
+#, "[[<-", "[<-"
+
+
+export(updateArchiveFiles)#, updateArchive)
+
+
+export(zip, simpleZip)
+
+export(zave, Rdz)
+exportMethods(load)
+exportClass(RdzArchive)
+
+export(rmZipEntries)
+export(getZipComment)
