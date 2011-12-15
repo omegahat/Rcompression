@@ -147,7 +147,7 @@ getZipComment(filename)
   names(ar)
   length(ar)
 
-  if(require(RCurl)) {
+  if(require(RCurl) && url.exists('http://www.ecb.int/stats/eurofxref/eurofxref-hist.zip')) {
 
      data = getURLContent('http://www.ecb.int/stats/eurofxref/eurofxref-hist.zip?1a1b5dbb25d31898b347736783bd440a')
      ar = zipArchive(data)
