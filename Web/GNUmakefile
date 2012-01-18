@@ -1,4 +1,7 @@
-WEB_DIR=www.omegahat.org:/home3/WebSites/Omega/Rcompression
+#WEB_DIR=www.omegahat.org:/home3/WebSites/Omega/Rcompression
+PACKAGE=Rcompression
+include ../../RPackageWebConfig
+include ../../RPackageWebRules
 
 
 shipIndex: index.html extra
