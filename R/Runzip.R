@@ -273,6 +273,7 @@ setClass("unzMemoryRef",
 setClass("ZipArchive", representation(classes = "character", elements = "character", info = "data.frame"),
                prototype = list(classes = "ZipArchive"))
 
+
 setClass("ZipFileArchive", representation(readTime = "POSIXct"),
                            contains = c("character", "ZipArchive"),
                  prototype = prototype(readTime = as.POSIXct(NA)))
@@ -281,6 +282,10 @@ setClass("ZipMemoryArchive", contains = c("ZipArchive", "unzMemoryRef"),
                prototype = list(classes = c("ZipMemoryArchive", "ZipArchive", "unzMemory", "unzContent")))          
 
 
+setClass("Volatile")
+
+setClass("VolatileZipFileArchive", contains = c("ZipFileArchive", "Volatile"))
+setClass("VolatileZipMemoryArchive", contains = c("ZipMemoryArchive", "Volatile"))
 
   # method for displaying the ZipArchive in an human-readable manner.
 setMethod("show", "ZipArchive",
@@ -292,7 +297,9 @@ setMethod("show", "ZipArchive",
 
 
 zipArchive =
-function(filename, check = TRUE, class = if(is.raw(filename)) "ZipMemoryArchive" else "ZipFileArchive")
+function(filename, check = TRUE, const = FALSE,
+          class = sprintf("%s%s", if(const) "" else  "Volatile",
+                                  if(is.raw(filename)) "ZipMemoryArchive" else "ZipFileArchive"))
 {
     time = structure(0, class = c("POSIXct", "POSIXt"))
     if(is.raw(filename)) {
@@ -335,8 +342,18 @@ function(x)
 setMethod("names", "ZipArchive",
 #"names.ZipArchive" =
 function(x)
- attr(x, "elements")
+     x@elements
 )
+
+setMethod("names", "Volatile",
+#"names.ZipArchive" =
+function(x) {
+  browser()
+  if(x@readTime < file.info(as(x, "character"))[1, "mtime"])
+     rownames(getZipInfo(as(x, "character")))
+  else
+    callNextMethod()
+})
 
 
 print.ZipArchive =

@@ -33,6 +33,7 @@ export(loadZip, readBinaryFile)
 #S3method("[[", "ZipArchiveDataFrame")
 # S3method("[", "ZipArchiveDataFrame")
 
+exportClass(Volatile)
 
 exportClasses("ZipArchive", ZipFileArchive, ZipMemoryArchive, ZipArchiveEntry)
 

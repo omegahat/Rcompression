@@ -6,6 +6,16 @@
 <body>
 <h1></h1>
 
+<h2>Version 0.94-0</h2>
+<dl>
+  <dt>
+  <li> The names()  method for a ZipArchive object now checks if the
+      archive on disk has been updated more recently than the original
+      readTime and if so, doesn't use the cached names.
+  <dd> We may add an additional class to allow for a "const" or
+      non-volatile zip archive that the caller knows will not be updated.
+</dl>
+
 <h2>Version 0.93-2</h2>
 <dl>
   <dt> Added unistd.h as an include in untgz.h for the Mac as it was
@@ -215,6 +225,6 @@
 <address><a href="http://www.stat.ucdavis.edu/~duncan">Duncan Temple Lang</a>
 <a href=mailto:duncan@wald.ucdavis.edu>&lt;duncan@wald.ucdavis.edu&gt;</a></address>
 <!-- hhmts start -->
-Last modified: Wed Apr  6 14:51:17 PDT 2011
+Last modified: Wed Jan 18 13:41:53 PST 2012
 <!-- hhmts end -->
 </body> </html>

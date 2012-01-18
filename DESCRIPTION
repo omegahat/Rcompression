@@ -1,5 +1,5 @@
 Package: Rcompression
-Version: 0.93-2
+Version: 0.94-0
 Title: In-memory decompression for GNU zip and bzip2 formats.
 Author: Duncan Temple Lang
 Depends: methods, R (>= 1.0.0)
