@@ -341,7 +341,8 @@ function(x)
 
 setMethod("names", "ZipArchive",
             function(x)
-              if(is(x, "Volatile") && x@readTime < file.info(as(x, "character"))[1, "mtime"])
+              if(is(x, "Volatile") && is(x, "ZipFileArchive") &&
+                   x@readTime < file.info(as(x, "character"))[1, "mtime"])
                     rownames(getZipInfo(as(x, "character")))
               else
                  x@elements

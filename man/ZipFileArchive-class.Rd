@@ -5,6 +5,7 @@
 \alias{ZipFileArchive-class}
 \alias{ZipMemoryArchive-class}
 \alias{ZipArchiveEntry-class}
+\alias{Volatile-class}
 
 
 \title{Classes related to Zip archives}
@@ -12,6 +13,10 @@
   These classes represent Zip archives within a file (\code{ZipFileArchive}),
   within a memory buffer (\code{ZipMemoryArchive}), and individual entries
   within a Zip archive ((\code{ZipArchiveEntry}).
+
+  \code{Volatile} is a class that has no slots but is used to identify
+  if the contents of the object may change without the R object
+  changing, e.g. an external file such as a Zip archive.
 }
 \section{Objects from the Class}{
 

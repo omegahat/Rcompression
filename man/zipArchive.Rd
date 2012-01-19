@@ -35,8 +35,11 @@ you will want to use \code{check = FALSE}.
  more appropriate.
 }
 \usage{
-zipArchive(filename, check = TRUE,
-            class = if(is.raw(filename)) "ZipMemoryArchive" else "ZipFileArchive")
+zipArchive(filename, check = TRUE, const = FALSE,
+            class = sprintf("\%s\%s", if (const) "" else "Volatile",
+                                    if (is.raw(filename))
+                                      "ZipMemoryArchive" 
+                                    else "ZipFileArchive")) 
 getZipFileEntry(archive, el, password = character(), mode = "character",
                  info = getZipInfo(archive), nullOk = FALSE, last = TRUE)
 getZipComment(filename)
@@ -48,7 +51,12 @@ getZipComment(filename)
     It can also be an object of class \code{\link{ZipArchive-class}} or a
     derived class.
    }
-  \item{check}{a logical value indicating whether to raise an error if the file doesn't exist.} 
+  \item{check}{a logical value indicating whether to raise an error if
+    the file doesn't exist.} 
+  \item{const}{a logical value that indicates whether the caller knows
+  that the contents of the ZIP archive will be unmodified while the
+  R object is in use. This affects how the names are computed, either
+  dynamically or via the cached values if \code{const} is \code{TRUE}.}
   \item{class}{a character vector giving the name(s) of the S4 classes
     for the resulting object.}
 
