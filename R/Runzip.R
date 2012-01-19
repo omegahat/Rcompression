@@ -284,7 +284,7 @@ setClass("ZipMemoryArchive", contains = c("ZipArchive", "unzMemoryRef"),
 
 setClass("Volatile")
 
-setClass("VolatileZipFileArchive", contains = c("ZipFileArchive", "Volatile"))
+setClass("VolatileZipFileArchive", contains = c("Volatile", "ZipFileArchive"))
 setClass("VolatileZipMemoryArchive", contains = c("ZipMemoryArchive", "Volatile"))
 
   # method for displaying the ZipArchive in an human-readable manner.
@@ -340,19 +340,26 @@ function(x)
 )
 
 setMethod("names", "ZipArchive",
-#"names.ZipArchive" =
-function(x)
-     x@elements
-)
+            function(x)
+              if(is(x, "Volatile") && x@readTime < file.info(as(x, "character"))[1, "mtime"])
+                    rownames(getZipInfo(as(x, "character")))
+              else
+                 x@elements
+             )
 
+if(FALSE)
+   # The multiple inheritance is messed up here. callNextMethod goes to .Primitive() for names.
+   #
 setMethod("names", "Volatile",
 #"names.ZipArchive" =
 function(x) {
   browser()
   if(x@readTime < file.info(as(x, "character"))[1, "mtime"])
      rownames(getZipInfo(as(x, "character")))
-  else
-    callNextMethod()
+  else {
+     callNextMethod()
+    # names(as(x, names(getClass(x)@contains)[2]))
+  }
 })
 
 
