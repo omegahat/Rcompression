@@ -1,16 +1,22 @@
 #!/bin/sh
 
+if test -z "$LIB_BZIP2" ; then
+#    LIB_BZIP2=C:/cygwin64/home/duncantl/RWinLib/archive/baselibs-3.5.0    
+    echo "See the README.windows for where to get the 3rd-party static libraries"
+    echo "Please define LIB_BZIP2"
+  exit 1
+fi
+
+
+
 if test -z "$LIB_ZLIB" ; then
+    #  LIB_ZLIB=C:/cygwin64/home/duncantl/RWinLib/archive/baselibs-3.5.0
   echo "Please define LIB_ZLIB"
   exit 1
 fi
 
-if test -z "$LIB_BZIP2" ; then
-  echo "Please define LIB_BZIP2"
-  exit 1
-fi
 
-mkdir $R_PACKAGE_DIR/libs
+#mkdir $R_PACKAGE_DIR/libs
 
-cp $LIB_ZLIB/bin/zlib1.dll $R_PACKAGE_DIR/libs
-cp $LIB_BZIP2/bin/bzip2.dll $R_PACKAGE_DIR/libs
+#cp $LIB_ZLIB/bin/zlib1.dll $R_PACKAGE_DIR/libs
+#cp $LIB_BZIP2/bin/bzip2.dll $R_PACKAGE_DIR/libs
