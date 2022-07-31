@@ -1,6 +1,8 @@
 #include "RConverters.h"
 #include "Rdefines.h"
 
+#include <stdlib.h>
+
 
 SEXP
 R_createNativeReference(void *val, const char *className, const char *tagName)
