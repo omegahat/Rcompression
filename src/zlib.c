@@ -7,6 +7,8 @@
 #include "R_ext/Memory.h"
 #include "R_ext/Utils.h"
 
+#include "Rcompression.h"
+
 /*
  This is used to read the result from a request where the result is an
  in-memory gzipped (?really? more like compressed with compress rather than gzip) stream. 
@@ -152,8 +154,6 @@ R_gzuncompress(SEXP r_source, SEXP r_guess_size, SEXP asText)
       memcpy(RAW(r_ans), ans, stream.total_out);
   }
  
- r_ans = mkString(ans);
-
  return(r_ans);
 }
 
