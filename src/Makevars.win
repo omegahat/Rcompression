@@ -1,3 +1,4 @@
 
 PKG_CPPFLAGS=-I${LIB_BZIP2}/include -I${LIB_ZLIB}/include
-PKG_LIBS=-L${LIB_BZIP2}/lib -lbz2 -L${LIB_ZLIB}/bin -lzlib1
+PKG_LIBS=-L${LIB_BZIP2}/lib${R_ARCH} -lbz2 -L${LIB_ZLIB}${R_ARCH} -lz
+# -lzlib1

@@ -1,3 +1,31 @@
+The simplest way to get the relevant static precompiled libraries
+we need for this package is from Jeroen Oom's RWinLib repository.
+
+Specifically,
+  https://github.com/RWinLib/baselibs/releases/
+
+Download the zip file for the relevant release of R that you have.
+
+Unzip this archive.
+
+In the DOS command prompt shell
+
+set LIB_ZLIB=C:/path/to/unzipped/files
+set LIB_BZIP2=C:/path/to/unzipped/files
+
+
+Then
+R CMD INSTALL Rcompression
+should work.
+
+
+
+
+
+
+--
+Old
+
 Get zlib123.zip from www.zlib.net (near the bottom of the page
 under zlib compiled DLL). Unzip this into a directory, say,
 C:/zlib.  Then set the environment variable LIB_ZLIB to that
