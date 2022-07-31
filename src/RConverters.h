@@ -3,6 +3,8 @@
 #include <Rinternals.h>
 #include <Rdefines.h>
 
+#include "Rcompression.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
