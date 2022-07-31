@@ -305,14 +305,17 @@ int matchname (int arg,int argc,char **argv,char *fname)
 #undef ERROR
 #endif
 
-#include <R_ext/RS.h>
+#undef error
+
+//#include <R_ext/RS.h>
+#include <Rdefines.h>
+#include "Rcompression.h"
 
 void R_error(const char *msg)
 {
   PROBLEM "%s: %s", prog, msg
   ERROR;
 }
-
 
 
 #include "Rtar.h"

@@ -3,7 +3,7 @@
 #include <Rdefines.h>
 #include <Rinternals.h>
 #include <R_ext/Memory.h>
-
+#include "Rcompression.h"
 
 /* Allocation and free routines for the z_stream in zlib. */
 static void*

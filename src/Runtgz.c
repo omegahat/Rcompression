@@ -4,6 +4,7 @@
 #include <Rinternals.h>
 #include <R_ext/RS.h>
 #include <Rdefines.h>
+#include "Rcompression.h"
 
 
 #include "Rtar.h"

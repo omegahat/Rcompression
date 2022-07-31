@@ -12,6 +12,7 @@
 #include <errno.h>
 #include <fcntl.h>
 
+#include "Rcompression.h"
 
 #ifndef WIN32
 # include <unistd.h>
