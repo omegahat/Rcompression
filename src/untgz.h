@@ -146,4 +146,4 @@ typedef void(*MatchFileFun)();
 int tar                 OF((gzFile, int, int, int, char **, TarCallbackFun cb, void *data));
 
 
-
+int makedir             OF((const char *));

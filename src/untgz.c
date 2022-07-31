@@ -32,7 +32,6 @@ void restore_attr       OF((struct attr_item **));
 
 int ExprMatch           OF((char *, char *));
 
-int makedir             OF((char *));
 int matchname           OF((int, int, char **, char *));
 
 void help               OF((int));
@@ -241,7 +240,7 @@ int ExprMatch (char *string, char *expr)
 /* return 1 if OK */
 /*        0 on error */
 
-int makedir (char *newdir)
+int makedir (const char *newdir)
 {
   char *buffer = strdup(newdir);
   char *p;

@@ -25,6 +25,9 @@
 #endif
 
 #include "miniunzip.h"
+#include "untgz.h"
+
+#include "Rcompression.h"
 
 #define CASESENSITIVITY (0)
 #define WRITEBUFFERSIZE (8192)
@@ -343,7 +346,8 @@ int do_extract_currentfile(unzFile uf, const int *popt_extract_without_path, int
             {
                 char c=*(filename_withoutpath-1);
                 *(filename_withoutpath-1)='\0';
-                makedir(write_filename);
+		makedir(write_filename);
+		// mkdir(write_filename, S_IFDIR | S_IRWXU);
                 *(filename_withoutpath-1)=c;
                 fout=fopen(write_filename,"wb");
             }
