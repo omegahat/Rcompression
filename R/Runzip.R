@@ -131,9 +131,9 @@ function(x, tz = "", ...)
   names(vals) <- gsub("^tm_", "", slotNames)
 
   vals$year = vals$year - 1900
-  vals$wday = NA
-  vals$yday = NA
-  vals$isdist = 1
+  vals$wday = as.numeric(NA)
+  vals$yday = as.numeric(NA)
+  vals$isdst = 1
 
   attr(vals, "tzone") <- tz
   class(vals) <- c("POSIXt", "POSIXlt")
