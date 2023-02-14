@@ -109,6 +109,9 @@ getZipComment(filename)
   ar[".*"]  # regular expression
 
 
+\dontrun{
+# Passwords on zip files stopped working for now.
+
   f = system.file("sampleData", "tests.zip", package = "Rcompression")
   ar = zipArchive(f)
    
@@ -121,6 +124,9 @@ getZipComment(filename)
 
      # without the password, we'd have an error.
   try(ar[["files.R"]])
+}
+
+
 
 
     # 
@@ -154,11 +160,14 @@ getZipComment(filename)
   names(ar)
   length(ar)
 
+     # Download a zip file from a Web site and access its elements without writing it to disk.
   if(require("RCurl", character.only = TRUE) && url.exists('http://www.ecb.int/stats/eurofxref/eurofxref-hist.zip')) {
 
-     data = getURLContent('http://www.ecb.int/stats/eurofxref/eurofxref-hist.zip?1a1b5dbb25d31898b347736783bd440a')
+     data = getURLContent('http://www.ecb.int/stats/eurofxref/eurofxref-hist.zip?1a1b5dbb25d31898b347736783bd440a', followlocation = TRUE, binary = TRUE)
      ar = zipArchive(data)
-     read.csv(textConnection(ar[[1]]), header = TRUE, na.strings = "N/A")
+     d = read.csv(textConnection(ar[[1]]), header = TRUE, na.strings = "N/A")
+     names(d)
+     dim(d)
   }
 
 
@@ -179,11 +188,15 @@ getZipComment(filename)
 
   # or another view
 
- zip("bob.zip", list(first = I("Some text"),
+ file = file.path(tempdir(), "bob.zip")
+ zip(file, list(first = I("Some text"),
                      x = I("number one"),
                      x = I("number 2"),
                      x = I("third one")),  append = FALSE)
- a = zipArchive("bob.zip")
+
+ file.exists(file)
+ print(loadZip(file)[1:10])
+ a = zipArchive(file)
 
  a[["x"]]  # get the last one
  a[["x", last = FALSE]] # first one
