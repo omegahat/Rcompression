@@ -46,7 +46,7 @@ function( path )
 unzOpen.ZipFileArchive =
 function(path)
 {
-     path = as.ncharacter( path )
+     path = as.character( path )
     .Call('R_unzOpen', path)
 }
 
