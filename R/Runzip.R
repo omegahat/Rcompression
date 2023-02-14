@@ -111,7 +111,7 @@ function(x, row.names = NULL, optional = FALSE, ...)
             sapply(x, function(v) slot(v, slotName))
           })
   names(tmp) <- slotNames
-  ans = as.data.frame(tmp, names(x))
+  ans = as.data.frame(tmp, row.names) # names(x)
 
    # Need to take each object and put it into a POSIXct.
    # Go through POSIXlt first? since that is the similar format.
