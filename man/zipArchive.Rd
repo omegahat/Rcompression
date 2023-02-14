@@ -94,8 +94,7 @@ getZipComment(filename)
  For the assignment operators (\code{$<-}, \code{[<-} and \code{[[<-}),
  the updated archive object is returned.
 }
-\references{
-}
+%\references{}
 \author{Duncan Temple Lang}
 \seealso{
  \code{\link{getZipInfo}}
@@ -155,7 +154,7 @@ getZipComment(filename)
   names(ar)
   length(ar)
 
-  if(require(RCurl) && url.exists('http://www.ecb.int/stats/eurofxref/eurofxref-hist.zip')) {
+  if(require("RCurl", character.only = TRUE) && url.exists('http://www.ecb.int/stats/eurofxref/eurofxref-hist.zip')) {
 
      data = getURLContent('http://www.ecb.int/stats/eurofxref/eurofxref-hist.zip?1a1b5dbb25d31898b347736783bd440a')
      ar = zipArchive(data)

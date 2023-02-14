@@ -28,12 +28,7 @@ Class \code{"RC++Reference"}, directly.
 \section{Methods}{
 No methods defined with class "unzFileRef" in the signature.
 }
-\references{}
-\author{}
-\note{}
+\references{zlib-1.2.13}
+\author{Duncan Temple Lang}
 
-\seealso{
-}
-\examples{
-}
 \keyword{classes}

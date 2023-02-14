@@ -70,11 +70,8 @@ updateArchiveFiles(archive, values, replace = TRUE,
 %   of an Office Open file. The .files/... are the supporting/related files
 %   such as images, styles, etc. }
 }
-\details{
-}
-\value{
-
-}
+%\details{}
+%\value{}
 \references{
 The zip command-line utility.
 }
@@ -84,7 +81,6 @@ Duncan Temple Lang
 \seealso{
  \code{\link{zipArchive}}
 }
-\examples{
-}
+%\examples{}
 \keyword{IO}
 \concept{Zip archive}

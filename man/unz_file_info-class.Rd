@@ -60,7 +60,5 @@ No methods defined with class \code{unz_file_info} in the signature.
 \seealso{
 \code{\link{getZipInfo}}
 }
-\examples{
-
-}
+%\examples{}
 \keyword{classes}

@@ -49,6 +49,5 @@ No methods defined with class \code{tm_unz} in the signature.
   \code{\link{getZipInfo}}
   \code{\link{unz_file_info-class}}
 }
-\examples{
-}
+%\examples{}
 \keyword{classes}

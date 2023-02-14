@@ -44,8 +44,6 @@ the gzip application.
 \author{
 Duncan Temple Lang
 }
-\note{
-}
 
 \seealso{
 \code{\link{compress}}

@@ -36,7 +36,7 @@ An object of class \code{\link{RdzArchive-class}}.
 \author{
 Duncan Temple Lang
 }
-\seealso{}
+%\seealso{}
 \examples{
  x = 1:10
  y = letters
