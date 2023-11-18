@@ -47,9 +47,7 @@ collectContents(entries)
 \seealso{ 
  \code{\link{tarExtract}}
 }
-\examples{
-
-}
+%\examples{}
 \keyword{IO}
 \concept{compression}
 \concept{callback}

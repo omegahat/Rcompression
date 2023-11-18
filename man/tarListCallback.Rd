@@ -20,10 +20,8 @@
 tarListCallback()
 }
 %- maybe also 'usage' for other objects documented here.
-\arguments{
-}
-\details{
-}
+%\arguments{}
+%\details{}
 \value{
  A list of two functions
   \item{callback}{the function that is to be invoked for each entry as
@@ -35,7 +33,7 @@ tarListCallback()
   TarInfoCallback to identify it as being a pair
   that \code{\link{tarInfo}} can use together.
 }
-\references{}
+%\references{}
 \author{Duncan Temple Lang}
 
 \seealso{

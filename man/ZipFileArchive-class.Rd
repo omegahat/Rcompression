@@ -18,9 +18,7 @@
   if the contents of the object may change without the R object
   changing, e.g. an external file such as a Zip archive.
 }
-\section{Objects from the Class}{
-
-}
+%\section{Objects from the Class}{}
 \section{Slots}{
   \describe{
     \item{\code{.Data}:}{Object of class \code{"character"} ~~ }

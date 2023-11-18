@@ -1,3 +1,14 @@
+## The Rcompression Package
+### Read and write tar, zip, bz2 compressed and archive files and memory
+
+
+
+
+
+
+## Installation
+
+
 This package depends on zlib and bzip2's library.
 On most machines, you will be able to use existing
 installations of both of these systems.

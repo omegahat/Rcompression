@@ -134,7 +134,7 @@ setMethod(updateArchiveFiles, "ZipFileArchive",
 
 setMethod(updateArchiveFiles, "RdzArchive", 
   function(archive, values, replace = TRUE, origVals = archive[,, mode = "raw"], ...,
-            .classes = as.charater(rep(NA, length(values))),
+            .classes = as.character(rep(NA, length(values))),
               .sizes = rep(as.integer(NA), length(values)))
    {
 

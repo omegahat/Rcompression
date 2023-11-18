@@ -38,8 +38,7 @@ tarInfo(filename, fun = tarListCallback(), data = NULL)
     passed via \code{fun}. If that argument is not a routine,
    then this is ignored.}
 }
-\details{
-}
+%\details{}
 \value{
   By default, the result is a data frame
   with a row for each entry in the archive
@@ -62,7 +61,7 @@ zlib/contrib/untgz in the zlib-1.2.3 distribution.
    adapted to Unix by Jean-loup Gailly <jloup@gzip.org>
    and with  various fixes by Cosmin Truta <cosmint@cs.ubbcluj.ro>.
 }
-\note{}
+%\note{}
 \seealso{
  \code{\link{tarExtract}}
 }

@@ -80,9 +80,7 @@ tarExtract(filename, entries = character(),
     (More details needed.)
  }
 }
-\details{
- 
-}
+%\details{ }
 \value{
   By default, a list with an element  for each entry specified.
   The content of each element is a \code{\link[base]{raw}}

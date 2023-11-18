@@ -1,3 +1,6 @@
+import(methods)
+importFrom("utils", "object.size")
+
 useDynLib(Rcompression,
           R_uncompress, R_gzuncompress, R_compress, R_bz2uncompress,
           R_zlibVersion,

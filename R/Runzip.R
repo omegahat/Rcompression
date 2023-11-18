@@ -111,7 +111,7 @@ function(x, row.names = NULL, optional = FALSE, ...)
             sapply(x, function(v) slot(v, slotName))
           })
   names(tmp) <- slotNames
-  ans = as.data.frame(tmp, names(x))
+  ans = as.data.frame(tmp, row.names) # names(x)
 
    # Need to take each object and put it into a POSIXct.
    # Go through POSIXlt first? since that is the similar format.
@@ -213,8 +213,8 @@ function(stream, password = character(), len = NA, mode = "")
 #  is(stream, "ZipMemoryArchive")
 #     .Call("R_unzMemoryRef_reset", stream)
 #  else 
-    if(.Call("R_unzOpenCurrentFilePassword", stream, as.character(password)) != 0)
-      stop("Can't open current file in the archive")
+    if((err <- .Call("R_unzOpenCurrentFilePassword", stream, as.character(password))) != 0)
+      stop("Can't open current file in the archive: error ", err)
  
   buf = if(mode %in% c("binary", "raw")) 
            raw(len)
@@ -225,7 +225,8 @@ function(stream, password = character(), len = NA, mode = "")
      buf
   else {
     elName = paste(rep(".", 1024), collapse = "")
-    x = unzGetCurrentFileInfo(stream, elName, nchar(elName), raw(0), 0, character(), 0)    
+    x = unzGetCurrentFileInfo(stream, elName, nchar(elName), raw(0), 0, character(), 0)
+    #XXX  ????
     stop("Failed to read element from ZIP archive: ", x$szFileName)
   }
 }
