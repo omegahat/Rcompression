@@ -200,15 +200,15 @@ R_unzGetCurrentFileInfo(SEXP r_file, SEXP r_szFileName, SEXP r_fileNameBufferSiz
 {
 
     SEXP r_ans = R_NilValue;
-unz_file_info pfile_info ;
-   unzFile file ;
-   const char * szFileName ;
-   uLong fileNameBufferSize ;
-   void * extraField ;
-   uLong extraFieldBufferSize ;
-   const char * szComment ;
-   uLong commentBufferSize ;
-     int ans ;
+    unz_file_info pfile_info ;
+    unzFile file ;
+    const char * szFileName ;
+    uLong fileNameBufferSize ;
+    void * extraField ;
+    uLong extraFieldBufferSize ;
+    const char * szComment ;
+    uLong commentBufferSize ;
+    int ans ;
 
         file  =  DEREF_REF_PTR_CLASS( r_file ,  unzFile, unzContent ) ;
         szFileName  =  GET_LENGTH( r_szFileName ) > 0 ? CHAR(STRING_ELT( r_szFileName , 0)) :  NULL ;
